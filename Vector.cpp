@@ -1,5 +1,4 @@
-#include <cstdlib>
-
+#include <cstdio>
 
 template<typename T, size_t capacity>
 class Vector {
@@ -7,38 +6,25 @@ class Vector {
     size_t size = 0;
     T *buffer;
 
-    class iterator {
-        T *v;
-        unsigned long long index{};
+    class Iterator {
+        T *current;
     public:
-        iterator(T *pointer, unsigned long long index) {
-            this->v = pointer;
-            this->index = index;
-        }
+        explicit Iterator(T *x) : current(x) {}
 
-        iterator(iterator const &A) {
-            this->v = A.v;
-            this->index = A.index;
-        }
+        T &operator+(int n) { return *(current + n); }
 
-        void operator++() {
-            this->v++;
-            this->index++;
-        };
+        T &operator-(int n) { return *(current - n); }
 
-        iterator operator+(unsigned long long shift) {
-            this->v += shift;
-            this->index += shift;
-            return *this;
-        }
+        T &operator++() { return *current++; }
 
-        bool operator!=(iterator const &A) {
-            if (this->index == A.index) {
-                return true;
-            } else {
-                return false;
-            }
-        }
+        T &operator--() { return *current--; }
+
+        bool operator==(const Iterator &it) { return current == it.current; }
+
+        bool operator!=(const Iterator &it) { return current != it.current; }
+
+        T &operator*() { return *current; }
+
     };
 
 
@@ -49,15 +35,6 @@ public:
 
     ~Vector() {
         delete[]buffer;
-    }
-
-    iterator begin() {
-        iterator A(buffer, 0);
-        return A;
-    }
-
-    iterator end() {
-        return iterator(&buffer[size], size);
     }
 
     void push_back(T element) {
@@ -73,7 +50,7 @@ public:
         if (size > 0) {
             size--;
         } else {
-            //удаление элемента из пустого вектора <=> бездействие
+            //удаление элемента из пустого вектора <=> бездействие?
         }
     }
 
@@ -84,6 +61,10 @@ public:
             //TODO выход за границы массива
         }
     }
+
+    Iterator begin() { return Iterator(buffer); }
+
+    Iterator end() { return Iterator(buffer + size); }
 };
 
 

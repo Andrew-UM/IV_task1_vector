@@ -2,7 +2,6 @@
 #include "Vector.cpp"
 
 
-
 int main() {
 
     Vector<int, 5> A;
@@ -11,14 +10,10 @@ int main() {
     A.push_back(2);
     A.push_back(3);
     A.push_back(4);
+
     A.pop_back();
 
-    auto current = A.begin();
-    //current = current + 2;
-    current.operator++();
-    auto last = A.end();
-    /*for(auto current : A){
-        std::cout << A[current];
-    }*/
-
+    for (auto x: A) {
+        std::cout << x << std::endl;
+    }
 }
