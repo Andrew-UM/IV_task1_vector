@@ -3,7 +3,6 @@
 
 int main()
 {
-
 	Vector<int, 5> A;
 
 	A.push_back(0);
@@ -22,8 +21,7 @@ int main()
 
 	A.pop_back();
 
-	for (auto x: A)
-	{
+	for (auto x : A) {
 		std::cout << x << std::endl;
 	}
 }
